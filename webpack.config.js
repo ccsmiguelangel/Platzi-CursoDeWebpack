@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const { SquooshPlugin } = require("squoosh-webpack-plugin");
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 
 module.exports = {
   entry: './src/index.js', // entrada archivo de primera lectura
@@ -14,7 +17,13 @@ module.exports = {
     assetModuleFilename: 'assets/images/[name][ext]'
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
+    alias: {
+      '@utils': path.resolve(__dirname, "src/utils/"),
+      '@templates': path.resolve(__dirname, "src/templates/"),
+      '@styles': path.resolve(__dirname, "src/styles/"),
+      '@images': path.resolve(__dirname, "src/assets/images/"),
+    }
   },
   module: {
     rules: [
@@ -50,7 +59,7 @@ module.exports = {
         //     mimetype: "application/font-woff",
         //     name: "[name].[ext]",
         //     outputPath: './assets/fonts/',
-        //     publicPath: './assets/fonts/',
+        //     publicPath: '../assets/fonts/',
         //     esModule: false
         //   }
         // }
@@ -85,6 +94,9 @@ module.exports = {
     //     quality: 65,
     //   },
     // }),
+    new Dotenv(),
+    new CleanWebpackPlugin(),
+
   ],
   optimization: {
     minimize: true,

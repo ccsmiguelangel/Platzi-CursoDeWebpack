@@ -1,4 +1,3 @@
-...
 [build]
   base = "jsPortfolio"
   publish = "dist"

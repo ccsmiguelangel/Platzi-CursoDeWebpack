@@ -4,6 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
 // const { SquooshPlugin } = require("squoosh-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
+const filewatcherPlugin = require("filewatcher-webpack-plugin_no-vuln");
+
+
 
 module.exports = {
   entry: './src/index.js', // entrada archivo de primera lectura
@@ -92,19 +95,27 @@ module.exports = {
     //   },
     // }),
     new Dotenv(),
+    new filewatcherPlugin({
+      watchFileRegex: [
+        './public',
+        './src', 
+        './dist',
+      ],
+      ignored: '/node_modules/'
+    })
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    watchFiles: {
-      options: {
-        usePolling: true,
-      }
-    },
-    compress: true,
-    historyApiFallback: true,
-    port: 8080,
-    open: true,
-  }
+  // devServer: {
+  //   static: {
+  //     directory: path.join(__dirname, 'dist'),
+  //   },
+  //   watchFiles: {
+  //     options: {
+  //       usePolling: true,
+  //     }
+  //   },
+  //   compress: true,
+  //   historyApiFallback: true,
+  //   port: 8080,
+  //   open: true,
+  // }
 }

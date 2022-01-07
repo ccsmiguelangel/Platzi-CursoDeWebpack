@@ -10,10 +10,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'), //dirección de salida dist de distribution
     filename: '[name].[contenthash].js', // build.js
-    assetModuleFilename: 'assets/images/[name][ext]'
+    assetModuleFilename: 'assets/images/[name].[contenthash][ext]'
   },
   mode: 'development',
-  watch: true,
   resolve: {
     extensions: ['.js'],
     alias: {
@@ -94,4 +93,18 @@ module.exports = {
     // }),
     new Dotenv(),
   ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    watchFiles: {
+      options: {
+        usePolling: true,
+      }
+    },
+    compress: true,
+    historyApiFallback: true,
+    port: 8080,
+    open: true,
+  }
 }

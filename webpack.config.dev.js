@@ -4,8 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
 // const { SquooshPlugin } = require("squoosh-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
-const filewatcherPlugin = require("filewatcher-webpack-plugin_no-vuln");
-
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 
 module.exports = {
@@ -16,6 +15,7 @@ module.exports = {
     assetModuleFilename: 'assets/images/[name].[contenthash][ext]'
   },
   mode: 'development',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js'],
     alias: {
@@ -95,27 +95,15 @@ module.exports = {
     //   },
     // }),
     new Dotenv(),
-    new filewatcherPlugin({
-      watchFileRegex: [
-        './public',
-        './src', 
-        './dist',
-      ],
-      ignored: '/node_modules/'
-    })
+    new BundleAnalyzerPlugin()
   ],
-  // devServer: {
-  //   static: {
-  //     directory: path.join(__dirname, 'dist'),
-  //   },
-  //   watchFiles: {
-  //     options: {
-  //       usePolling: true,
-  //     }
-  //   },
-  //   compress: true,
-  //   historyApiFallback: true,
-  //   port: 8080,
-  //   open: true,
-  // }
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    historyApiFallback: true,
+    port: 8080,
+    open: true,
+  }
 }
